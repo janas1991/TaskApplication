@@ -42,8 +42,8 @@ public class TaskController {
         return new TaskDto(taskId, taskDto.getTitle(), taskDto.getContent());
     }
 
-    @PostMapping(value = "task/{id},{title},{content}")
-    public Task createTask(@PathVariable("id") long taskId, @PathVariable("title") String title, @PathVariable("content") String content) {
+    @PostMapping(value = "task/{id}")
+    public Task createTask(@PathVariable("id") long taskId, String title, String content) {
         return new Task(taskId, title, content);
     }
 }
