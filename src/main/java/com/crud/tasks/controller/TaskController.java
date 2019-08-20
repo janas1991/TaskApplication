@@ -25,9 +25,9 @@ public class TaskController {
     public void delateTask(@PathVariable("id") long taskId) {
     }
 
-    @PutMapping(value = "/updateTask/{taskDto}")
-    public TaskDto updateTask(@PathVariable("taskDto") TaskDto taskDto) {
-        return new TaskDto(1L, "test_title", "test_content");
+    @PutMapping(value = "/updateTask/{id}")
+    public TaskDto updateTask(@PathVariable("id") long taskId ,  TaskDto taskDto) {
+        return new TaskDto(taskId, "test_title", "test_content");
     }
 
     @PostMapping(value = "/createTask/{tasksDto}")
