@@ -1,6 +1,5 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.services.DbService;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("tasks")
@@ -39,8 +40,8 @@ public class TaskController {
         return new TaskDto(taskId, taskDto.getTitle(), taskDto.getContent());
     }
 
-    @PostMapping(value = "/{id}")
-    public Task createTask(@PathVariable("id") long taskId, String title, String content) {
-        return new Task(taskId, title, content);
+    @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE)
+    public void createTask(@RequestBody TaskDto taskDto) {
+        taskMapper.mapToTask(taskDto);
     }
 }
