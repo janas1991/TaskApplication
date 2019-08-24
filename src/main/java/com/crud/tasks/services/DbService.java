@@ -14,7 +14,7 @@ public class DbService {
     private TaskRepository taskRepository;
 
     public List<Task> getAllTasks() {
-        return taskRepository.findall();
+        return taskRepository.findAll();
     }
 
     public Task getTaskById(long id){
