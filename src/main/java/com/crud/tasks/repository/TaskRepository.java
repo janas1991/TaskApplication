@@ -8,4 +8,6 @@ import java.util.List;
 public interface TaskRepository extends CrudRepository<Task,Long> {
 
     List<Task> findall();
+
+    Task findById(long id);
 }

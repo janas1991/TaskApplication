@@ -20,24 +20,14 @@ public class TaskController {
     @Autowired
     TaskMapper taskMapper;
 
-    @GetMapping(value = "")
+    @GetMapping(value = "getTasks")
     public List<TaskDto> getTasks() {
         return taskMapper.mapToListTaskDto(dbService.getAllTasks());
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public TaskDto getTask(@PathVariable("id") long taskId) {
-        List<TaskDto> tmpList = getTasks();
-        TaskDto tmpTaskDto = null;
-        for (TaskDto taskDto : tmpList) {
-            if (taskDto.getId() == taskId) {
-                tmpTaskDto = new TaskDto(taskDto.getId(), taskDto.getTitle(), taskDto.getContent());
-                return tmpTaskDto;
-            } else {
-                return null;
-            }
-        }
-        return tmpTaskDto;
+        return taskMapper.mapToTaskDto(dbService.getTaskById(taskId));
     }
 
     @DeleteMapping(value = "/{id}")
