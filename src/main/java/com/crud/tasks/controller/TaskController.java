@@ -6,7 +6,6 @@ import com.crud.tasks.services.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -26,22 +25,23 @@ public class TaskController {
         return taskMapper.mapToListTaskDto(dbService.getAllTasks());
     }
 
-    @GetMapping(value = "/{id}")
-    public TaskDto getTask(@PathVariable("id") long taskId) {
-        return taskMapper.mapToTaskDto(dbService.getTaskById(taskId));
+    @GetMapping(value = "/")
+    public TaskDto getTask(@RequestParam long taskId) throws TaskNotFoundException {
+        return taskMapper.mapToTaskDto(dbService.getTaskById(taskId).orElseThrow(TaskNotFoundException::new));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteTask(@PathVariable("id") long taskId) {
+    @DeleteMapping(value = "/")
+    public TaskDto deleteTask(@RequestBody TaskDto taskDto) {
+        return taskMapper.mapToTaskDto(dbService.deleteTaskById(taskDto.getId()));
     }
 
-    @PutMapping(value = "/{id}")
-    public TaskDto updateTask(@PathVariable("id") long taskId, @Valid TaskDto taskDto) {
-        return new TaskDto(taskId, taskDto.getTitle(), taskDto.getContent());
+    @PutMapping(value = "/")
+    public TaskDto updateTask(@RequestBody TaskDto taskDto) {
+        return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
     @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody TaskDto taskDto) {
-        taskMapper.mapToTask(taskDto);
+        dbService.saveTask(taskMapper.mapToTask(taskDto));
     }
 }
