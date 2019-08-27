@@ -20,7 +20,7 @@ public class TaskController {
     @Autowired
     TaskMapper taskMapper;
 
-    @GetMapping(value = "getTasks")
+    @GetMapping(value = "/getTasks")
     public List<TaskDto> getTasks() {
         return taskMapper.mapToListTaskDto(dbService.getAllTasks());
     }
@@ -30,17 +30,17 @@ public class TaskController {
         return taskMapper.mapToTaskDto(dbService.getTaskById(taskId).orElseThrow(TaskNotFoundException::new));
     }
 
-    @DeleteMapping(value = "/")
+    @DeleteMapping()
     public TaskDto deleteTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.deleteTaskById(taskDto.getId()));
     }
 
-    @PutMapping(value = "/")
+    @PutMapping()
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
-    @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody TaskDto taskDto) {
         dbService.saveTask(taskMapper.mapToTask(taskDto));
     }
