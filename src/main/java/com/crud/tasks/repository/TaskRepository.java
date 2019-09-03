@@ -13,6 +13,4 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     Optional<Task> findById(long id);
 
     Task save(Task task);
-
-    Task deleteById(long id);
 }

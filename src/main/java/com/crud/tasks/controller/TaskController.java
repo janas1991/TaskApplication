@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
@@ -20,22 +21,22 @@ public class TaskController {
     @Autowired
     TaskMapper taskMapper;
 
-    @GetMapping(value = "/getTasks")
+    @GetMapping(value = "/")
     public List<TaskDto> getTasks() {
         return taskMapper.mapToListTaskDto(dbService.getAllTasks());
     }
 
-    @GetMapping( value = "/{id}")
+    @GetMapping(value = "/{id}")
     public TaskDto getTask(@PathVariable("id") long taskId) throws TaskNotFoundException {
         return taskMapper.mapToTaskDto(dbService.getTaskById(taskId).orElseThrow(TaskNotFoundException::new));
     }
 
-    @DeleteMapping()
-    public TaskDto deleteTask(@RequestBody TaskDto taskDto) {
-        return taskMapper.mapToTaskDto(dbService.deleteTaskById(taskDto.getId()));
+    @DeleteMapping(value = "/{id}")
+    public void deleteTask(@PathVariable("id") long taskId) {
+        dbService.deleteTaskById(taskId);
     }
 
-    @PutMapping()
+    @PutMapping(value = "/")
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
