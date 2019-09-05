@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_tasks" default="compile.module.tasks">
+  <dirname property="module.tasks.basedir" file="${ant.file.module_tasks}"/>
+  
+  <property name="module.jdk.home.tasks" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tasks" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tasks" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tasks" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="tasks.output.dir" value="${module.tasks.basedir}/classes/production/tasks"/>
+  <property name="tasks.testoutput.dir" value="${module.tasks.basedir}/classes/test/tasks"/>
+  
+  <path id="tasks.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tasks.module.production.classpath">
+    <path refid="${module.jdk.classpath.tasks}"/>
+  </path>
+  
+  <path id="tasks.runtime.production.module.classpath">
+    <pathelement location="${tasks.output.dir}"/>
+  </path>
+  
+  <path id="tasks.module.classpath">
+    <path refid="${module.jdk.classpath.tasks}"/>
+    <pathelement location="${tasks.output.dir}"/>
+  </path>
+  
+  <path id="tasks.runtime.module.classpath">
+    <pathelement location="${tasks.testoutput.dir}"/>
+    <pathelement location="${tasks.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tasks">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tasks">
+    <patternset refid="excluded.from.module.tasks"/>
+  </patternset>
+  
+  
+  <target name="compile.module.tasks" depends="compile.module.tasks.production,compile.module.tasks.tests" description="Compile module tasks"/>
+  
+  <target name="compile.module.tasks.production" depends="register.custom.compilers" description="Compile module tasks; production classes"/>
+  
+  <target name="compile.module.tasks.tests" depends="register.custom.compilers,compile.module.tasks.production" description="compile module tasks; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.tasks" description="cleanup module">
+    <delete dir="${tasks.output.dir}"/>
+    <delete dir="${tasks.testoutput.dir}"/>
+  </target>
+</project>
