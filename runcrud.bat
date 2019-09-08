@@ -24,7 +24,7 @@ goto fail
 call %CATALINA_HOME%\bin\startup.bat
 goto end
 
-:fail 
+:fail
 echo.
 echo There were errors
 

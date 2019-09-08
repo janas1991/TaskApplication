@@ -24,6 +24,8 @@ dependencies {
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
+ //   providedRuntime group: "org.springframework.boot", name : "spring-boot-starter-tomcat"
+
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 }
