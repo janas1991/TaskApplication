@@ -10,6 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 
@@ -31,19 +32,24 @@ public class TrelloClient {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<TrelloBoardDto> getTrelloBoards() {
+    public List<Optional<TrelloBoardDto[]>> getTrelloBoards() {
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getURIToTrello(trelloAppKey, trelloToken, trelloApiEndPoint, trelloUsername), TrelloBoardDto[].class);
-
-        return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
+        try {
+            return Arrays.asList(ofNullable(boardsResponse));
+        } catch (NullPointerException ex) {
+            throw new NullPointerException(ex.getMessage());
+        }
     }
 
-    private URI getURIToTrello(String trelloAppKey, String trelloToken, String trelloApiEndPoint, String trelloUsername) {
+    private URI getURIToTrello(String trelloAppKey, String trelloToken, String trelloApiEndPoint, String
+            trelloUsername) {
 
         URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndPoint + "/members/" + trelloUsername + "/boards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
-                .queryParam("fields", "name,id").build().encode().toUri();
+                .queryParam("fields", "name,id")
+                .queryParam("lists", "all").build().encode().toUri();
 
         return url;
     }
