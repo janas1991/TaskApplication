@@ -4,10 +4,12 @@ import com.crud.tasks.domain.TrelloBoardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +39,8 @@ public class TrelloClient {
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getURIToTrello(trelloAppKey, trelloToken, trelloApiEndPoint, trelloUsername), TrelloBoardDto[].class);
         try {
             return Arrays.asList(ofNullable(boardsResponse));
-        } catch (NullPointerException ex) {
-            throw new NullPointerException(ex.getMessage());
+        } catch (RestClientResponseException e) {
+            throw new RestClientResponseException(e.getMessage(), e.getRawStatusCode(), e.getStatusText(), e.getResponseHeaders(), e.getResponseBodyAsByteArray(), Charset.defaultCharset());
         }
     }
 
