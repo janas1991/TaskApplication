@@ -21,6 +21,7 @@ public class TaskController {
     @Autowired
     TaskMapper taskMapper;
 
+
     @GetMapping(value = "/")
     public List<TaskDto> getTasks() {
         return taskMapper.mapToListTaskDto(dbService.getAllTasks());
@@ -41,8 +42,10 @@ public class TaskController {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value="/",consumes = APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody TaskDto taskDto) {
         dbService.saveTask(taskMapper.mapToTask(taskDto));
     }
+
+
 }
