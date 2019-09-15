@@ -21,13 +21,9 @@ public class SimpleEmailService {
     JavaMailSender javaMailSender;
 
     public void send(final Mail mail) {
-        try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
             javaMailSender.send(mailMessage);
             LOGGER.info("Email has been sent.");
-        } catch (MailException e) {
-            LOGGER.error("Failed to procces e-mail sending: ", e.getMessage());
-        }
     }
 
     private SimpleMailMessage createMailMessage(Mail mail) {

@@ -20,15 +20,15 @@ public class SimpleEmailServiceTest {
     private SimpleEmailService simpleEmailService;
     @Mock
     private JavaMailSender javaMailSender;
-
     @Test
-    private void shouldSendMail(){
+    public void shouldSendMail(){
         //Given
-        Mail mail = new Mail("michal@gmail.com","TestMail","TestMessage");
+        Mail mail = new Mail("michal@gmail.com","TestMail","TestMessage","michljanas1991@wp.pl");
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mail.getMailTo());
         simpleMailMessage.setSubject(mail.getSubject());
         simpleMailMessage.setText(mail.getMessage());
+        simpleMailMessage.setCc(mail.getToCc());
         //when
         simpleEmailService.send(mail);
         //
