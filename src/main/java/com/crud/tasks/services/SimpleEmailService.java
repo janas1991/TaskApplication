@@ -8,10 +8,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.Optional;
-
+@Service
 public class SimpleEmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEmailService.class);
@@ -25,7 +26,7 @@ public class SimpleEmailService {
             javaMailSender.send(mailMessage);
             LOGGER.info("Email has been sent.");
         } catch (MailException e) {
-            LOGGER.error("Failed to procces e-mail sending:", e.getMessage());
+            LOGGER.error("Failed to procces e-mail sending: ", e.getMessage());
         }
     }
 
