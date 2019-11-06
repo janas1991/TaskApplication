@@ -34,19 +34,15 @@ public class TaskControllerTest {
     @MockBean
     TaskController taskController;
 
-
     @Test
     public void shouldFetchFirstTask() throws Exception {
         //Given
-        List<TaskDto> taskLists = new ArrayList<>();
-        taskLists.add(new TaskDto(1, "Test title", "Test content"));
-
-        when(taskController.getTask(1)).thenReturn(taskLists.get(0));
+        when(taskController.getTask(1)).thenReturn(new TaskDto(1, "Test title", "Test content"));
         //When & Given
         mockMvc.perform(get("/tasks/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.content",is("Test content")))
+                .andExpect(jsonPath("$.content", is("Test content")))
                 .andExpect(jsonPath("$.title", is("Test title")));
     }
 
@@ -55,37 +51,33 @@ public class TaskControllerTest {
         //Given
         List<TaskDto> taskLists = new ArrayList<>();
         taskLists.add(new TaskDto(1, "Test title", "Test content"));
-        taskLists.add(new TaskDto(2,"Test title","Test content"));
+        taskLists.add(new TaskDto(2, "Test title", "Test content"));
         when(taskController.getTasks()).thenReturn(taskLists);
         //When & Given
         mockMvc.perform(get("/tasks/").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
-                .andExpect(jsonPath("$",hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
-    public void shouldCreateTask() throws Exception{
+    public void shouldCreateTask() throws Exception {
         //Given
-
-
         TaskDto taskDto = new TaskDto(
                 1,
                 "Test title",
                 "Test content"
         );
-
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskDto);
         when(taskController.createTask(any(TaskDto.class))).thenReturn(taskDto);
-
         //When & Then
         mockMvc.perform(post("/tasks/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
-                .andExpect(jsonPath("$.id",is(1)))
-                .andExpect(jsonPath("$.title",is("Test title")))
-                .andExpect(jsonPath("$.content",is("Test content")));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test title")))
+                .andExpect(jsonPath("$.content", is("Test content")));
     }
 
 }
