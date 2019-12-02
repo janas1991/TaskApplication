@@ -1,6 +1,5 @@
 package com.crud.tasks.config;
 
-import com.crud.tasks.controller.TrelloControler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -35,7 +34,6 @@ public class CoreConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        // Required by Swagger UI configuration
         registry.addResourceHandler("/lib/**").addResourceLocations("/lib/").setCachePeriod(0);
         registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(0);
         registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(0);

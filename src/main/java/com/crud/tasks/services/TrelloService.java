@@ -14,12 +14,8 @@ import static java.util.Optional.ofNullable;
 @Service
 public class TrelloService {
 
-   // @Autowired
-    //AdminConfig adminConfig;
     @Autowired
     TrelloClient trelloClient;
-    @Autowired
-    SimpleEmailService emailService;
 
     private static final String SUBJECT = "Tasks: New Trello Card";
 
@@ -29,7 +25,6 @@ public class TrelloService {
 
     public CreatedTrelloCardDto createdTrelloCard(final TrelloCardDto trelloCardDto){
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
-        ofNullable(newCard).ifPresent(card->emailService.send(new Mail("michaljanas1991@gmail.com",SUBJECT,"New Card" + card.getName() + "has been created on your Trello account","michaljanas1991@gmail.com")));
         return newCard;
     }
 }

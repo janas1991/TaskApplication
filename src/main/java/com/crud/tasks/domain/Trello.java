@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Trello {
-    LinkedHashSet s;
+
     @JsonProperty("board")
     private int board;
     @JsonProperty("card")
