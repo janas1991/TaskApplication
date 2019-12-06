@@ -29,8 +29,6 @@ public class TrelloService {
     @Autowired
     TaskRepository taskRepository;
 
-
-
     private static final String SUBJECT = "Tasks: New Trello Card";
 
 
@@ -40,12 +38,16 @@ public class TrelloService {
 
     public CreatedTrelloCardDto createdTrelloCard(final TrelloCardDto trelloCardDto){
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
-        ofNullable(newCard).ifPresent(card->simpleEmailService.send(simpleEmailService.createMimeMessage(new Mail(adminConfig.getAdminMail(),SUBJECT,"New card: " + card.getName() + " has been created on your Trello account","michaljanas1991@gmail.com"))));
+        sendMail(newCard);
         return newCard;
     }
 
     @Scheduled(fixedDelay = 30000)
     public void sendDailyMessege(){
         simpleEmailService.send(simpleEmailService.createDailyMessage(new Mail(adminConfig.getAdminMail(),"task report","you got " + taskRepository.count() + " tasks to do","michaljanas1991@gmail.com")));
+    }
+
+    public void sendMail(CreatedTrelloCardDto createdTrelloCardDto){
+        ofNullable(createdTrelloCardDto).ifPresent(card->simpleEmailService.send(simpleEmailService.createMimeMessage(new Mail(adminConfig.getAdminMail(),SUBJECT,"New card: " + card.getName() + " has been created on your Trello account","michaljanas1991@gmail.com"))));
     }
 }
