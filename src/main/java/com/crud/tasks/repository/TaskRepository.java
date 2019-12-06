@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Component
 public interface TaskRepository extends CrudRepository<Task, Long> {
     @Override
     List<Task> findAll();
