@@ -3,7 +3,6 @@ package com.crud.tasks.services;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -13,15 +12,16 @@ import org.thymeleaf.context.Context;
 @Service
 public class MailCreatorService {
 
-    @Autowired
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
-
-    @Autowired
     private AdminConfig adminConfig;
-
-    @Autowired
     private TaskRepository taskRepository;
+
+    public MailCreatorService(TemplateEngine templateEngine, AdminConfig adminConfig, TaskRepository taskRepository) {
+        this.templateEngine = templateEngine;
+        this.adminConfig = adminConfig;
+        this.taskRepository = taskRepository;
+    }
 
     public String buildTrelloCardEmail(String message) {
         Context context = new Context();

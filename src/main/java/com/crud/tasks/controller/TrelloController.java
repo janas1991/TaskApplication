@@ -14,8 +14,11 @@ import java.util.List;
 @RequestMapping("trello")
 public class TrelloController {
 
-    @Autowired
-    TrelloFacade trelloFacade;
+    private TrelloFacade trelloFacade;
+
+    public TrelloController(TrelloFacade trelloFacade) {
+        this.trelloFacade = trelloFacade;
+    }
 
     @GetMapping(value = "/")
     public List<TrelloBoardDto> getTrelloBoards() {

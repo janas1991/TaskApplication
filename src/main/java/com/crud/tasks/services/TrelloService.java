@@ -7,27 +7,27 @@ import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.mapper.CreatedTrelloCardDto;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.trello.client.TrelloClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import static java.util.Optional.ofNullable;
 
 @Service
 public class TrelloService {
 
-    @Autowired
-    TrelloClient trelloClient;
+    private TrelloClient trelloClient;
+    private SimpleEmailService simpleEmailService;
+    private AdminConfig adminConfig;
+    private TaskRepository taskRepository;
 
-    @Autowired
-    SimpleEmailService simpleEmailService;
-
-    @Autowired
-    AdminConfig adminConfig;
-
-    @Autowired
-    TaskRepository taskRepository;
+    public TrelloService(TrelloClient trelloClient, SimpleEmailService simpleEmailService, AdminConfig adminConfig, TaskRepository taskRepository) {
+        this.trelloClient = trelloClient;
+        this.simpleEmailService = simpleEmailService;
+        this.adminConfig = adminConfig;
+        this.taskRepository = taskRepository;
+    }
 
     private static final String SUBJECT = "Tasks: New Trello Card";
 

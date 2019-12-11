@@ -15,12 +15,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("tasks")
 public class TaskController {
 
-    @Autowired
-    DbService dbService;
+    private DbService dbService;
+    private TaskMapper taskMapper;
 
-    @Autowired
-    TaskMapper taskMapper;
-
+    public TaskController(DbService dbService, TaskMapper taskMapper) {
+        this.dbService = dbService;
+        this.taskMapper = taskMapper;
+    }
 
     @GetMapping(value = "/")
     public List<TaskDto> getTasks() {
@@ -42,10 +43,9 @@ public class TaskController {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
-    @PostMapping(value="/",consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE)
     public TaskDto createTask(@RequestBody TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
-
 
 }

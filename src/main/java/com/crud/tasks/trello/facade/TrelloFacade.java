@@ -15,15 +15,15 @@ import java.util.List;
 @Component
 public class TrelloFacade {
 
-    @Autowired
-    TrelloService trelloService;
-
-    @Autowired
-    TrelloMapper trelloMapper;
-
-    @Autowired
+    private TrelloService trelloService;
+    private TrelloMapper trelloMapper;
     private TrelloValidator trelloValidator;
 
+    public TrelloFacade(TrelloService trelloService, TrelloMapper trelloMapper, TrelloValidator trelloValidator) {
+        this.trelloService = trelloService;
+        this.trelloMapper = trelloMapper;
+        this.trelloValidator = trelloValidator;
+    }
 
     public List<TrelloBoardDto> fetchTrelloBoards() {
         List<TrelloBoard> trelloBoards = trelloMapper.mapToBoards(trelloService.fetchTrelloBoards());

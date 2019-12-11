@@ -1,12 +1,10 @@
 
 package com.crud.tasks.config;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Getter
 public class AdminConfig {
 
     @Value("${admin.name}")
@@ -17,4 +15,16 @@ public class AdminConfig {
 
     @Value("{admin.company}")
     private String adminCompany;
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public String getAdminMail() {
+        return adminMail;
+    }
+
+    public String getAdminCompany() {
+        return adminCompany;
+    }
 }

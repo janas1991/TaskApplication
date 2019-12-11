@@ -2,7 +2,6 @@ package com.crud.tasks.services;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +12,11 @@ import java.util.Optional;
 @Service
 public class DbService {
 
-    @Autowired
     private TaskRepository taskRepository;
+
+    public DbService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
