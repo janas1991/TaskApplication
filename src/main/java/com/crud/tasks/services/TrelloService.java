@@ -7,6 +7,7 @@ import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.mapper.CreatedTrelloCardDto;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.trello.client.TrelloClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,12 @@ import static java.util.Optional.ofNullable;
 @Service
 public class TrelloService {
 
-    private TrelloClient trelloClient;
-    private SimpleEmailService simpleEmailService;
-    private AdminConfig adminConfig;
-    private TaskRepository taskRepository;
+    private final TrelloClient trelloClient;
+    private final SimpleEmailService simpleEmailService;
+    private final AdminConfig adminConfig;
+    private final TaskRepository taskRepository;
 
+    @Autowired
     public TrelloService(TrelloClient trelloClient, SimpleEmailService simpleEmailService, AdminConfig adminConfig, TaskRepository taskRepository) {
         this.trelloClient = trelloClient;
         this.simpleEmailService = simpleEmailService;

@@ -18,6 +18,7 @@ public class TaskController {
     private DbService dbService;
     private TaskMapper taskMapper;
 
+    @Autowired
     public TaskController(DbService dbService, TaskMapper taskMapper) {
         this.dbService = dbService;
         this.taskMapper = taskMapper;

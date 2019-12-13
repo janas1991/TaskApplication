@@ -24,9 +24,10 @@ public class TrelloClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloClient.class);
 
-    private RestTemplate restTemplate;
-    private TrelloConfig trelloConfig;
+    private final RestTemplate restTemplate;
+    private final TrelloConfig trelloConfig;
 
+    @Autowired
     public TrelloClient(RestTemplate restTemplate, TrelloConfig trelloConfig) {
         this.restTemplate = restTemplate;
         this.trelloConfig = trelloConfig;

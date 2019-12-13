@@ -16,6 +16,7 @@ public class TrelloController {
 
     private TrelloFacade trelloFacade;
 
+    @Autowired
     public TrelloController(TrelloFacade trelloFacade) {
         this.trelloFacade = trelloFacade;
     }

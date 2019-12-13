@@ -3,6 +3,7 @@ package com.crud.tasks.services;
 import com.crud.tasks.domain.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,9 +16,10 @@ public class SimpleEmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMailMessage.class);
 
-    private MailCreatorService mailCreatorService;
-    private JavaMailSender javaMailSender;
+    private final MailCreatorService mailCreatorService;
+    private final JavaMailSender javaMailSender;
 
+    @Autowired
     public SimpleEmailService(MailCreatorService mailCreatorService, JavaMailSender javaMailSender) {
         this.mailCreatorService = mailCreatorService;
         this.javaMailSender = javaMailSender;

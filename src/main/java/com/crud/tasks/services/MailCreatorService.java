@@ -3,6 +3,7 @@ package com.crud.tasks.services;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -13,10 +14,11 @@ import org.thymeleaf.context.Context;
 public class MailCreatorService {
 
     @Qualifier("templateEngine")
-    private TemplateEngine templateEngine;
-    private AdminConfig adminConfig;
-    private TaskRepository taskRepository;
+    private final TemplateEngine templateEngine;
+    private final AdminConfig adminConfig;
+    private final TaskRepository taskRepository;
 
+    @Autowired
     public MailCreatorService(TemplateEngine templateEngine, AdminConfig adminConfig, TaskRepository taskRepository) {
         this.templateEngine = templateEngine;
         this.adminConfig = adminConfig;

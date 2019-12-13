@@ -15,10 +15,11 @@ import java.util.List;
 @Component
 public class TrelloFacade {
 
-    private TrelloService trelloService;
-    private TrelloMapper trelloMapper;
-    private TrelloValidator trelloValidator;
+    private final TrelloService trelloService;
+    private final TrelloMapper trelloMapper;
+    private final TrelloValidator trelloValidator;
 
+    @Autowired
     public TrelloFacade(TrelloService trelloService, TrelloMapper trelloMapper, TrelloValidator trelloValidator) {
         this.trelloService = trelloService;
         this.trelloMapper = trelloMapper;
