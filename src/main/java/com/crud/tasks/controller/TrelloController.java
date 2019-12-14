@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("trello")
 public class TrelloController {
 
-    private TrelloFacade trelloFacade;
+    private final TrelloFacade trelloFacade;
 
     @Autowired
     public TrelloController(TrelloFacade trelloFacade) {

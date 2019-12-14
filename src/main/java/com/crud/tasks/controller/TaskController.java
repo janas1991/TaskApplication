@@ -15,8 +15,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("tasks")
 public class TaskController {
 
-    private DbService dbService;
-    private TaskMapper taskMapper;
+    private final DbService dbService;
+    private final TaskMapper taskMapper;
 
     @Autowired
     public TaskController(DbService dbService, TaskMapper taskMapper) {
