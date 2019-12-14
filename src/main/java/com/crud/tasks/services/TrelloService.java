@@ -44,7 +44,7 @@ public class TrelloService {
         return newCard;
     }
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(cron = "0 0 12 * * * " )
     public void sendDailyMessege(){
         simpleEmailService.send(simpleEmailService.createDailyMessage(new Mail(adminConfig.getAdminMail(),"task report","you got " + taskRepository.count() + " tasks to do","michaljanas1991@gmail.com")));
     }
